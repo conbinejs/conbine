@@ -1,0 +1,36 @@
+{
+  "name": "conbine",
+  "version": "5.0.0",
+  "description": "A subset of ConboJS for use with your favourite view framework",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/conbojs/conbine.git"
+  },
+  "keywords": [
+    "conbo",
+    "conbine",
+    "mvc",
+    "mvx",
+    "mvcs",
+    "react",
+    "eventbus",
+    "command",
+    "typescript",
+    "es6",
+    "framework"
+  ],
+  "author": "Neil Rackett",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/conbojs/conbine/issues"
+  },
+  "homepage": "https://github.com/conbojs/conbine#readme",
+  "devDependencies": {
+    "typescript": "^4.2.3"
+  }
+}
