@@ -58,7 +58,7 @@ export class EventDispatcher {
         return eventListener.listener !== listener;
       });
       if (!this.#listeners[type].length) {
-        delete this.#listeners[type].length;
+        delete this.#listeners[type];
       }
     }
     return this;
