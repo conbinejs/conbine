@@ -27,7 +27,7 @@ export class EventDispatcher {
     return this;
   }
 
-  public addEventListener(type: string, listener: Function, options?: any): this {
+  public addEventListener(type: string, listener: Function, options: any = {}): this {
     if (!type) {
       throw new Error('Event type not specified');
     }
