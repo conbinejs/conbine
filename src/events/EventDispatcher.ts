@@ -19,30 +19,35 @@ export class EventDispatcher {
     if (!event.target) {
       event.target = this;
     }
-    if (this.#listeners[event.type]) {
-      this.#listeners[event.type].forEach((eventListener: IEventListener) => {
-        eventListener.listener(event);
+    const { type } = event;
+    if (this.#listeners[type]) {
+      this.#listeners[type].forEach((eventListener: IEventListener) => {
+        const { listener, options } = eventListener;
+        listener(event);
+        if (options.once) {
+          this.removeEventListener(type, listener);
+        }
       });
     }
     return this;
   }
 
-  public addEventListener(type: string, listener: Function, options: any = {}): this {
+  public addEventListener(type: string, listener: Function, options?: IEventListenerOptions): this {
+    options = Object.assign({}, defaultEventListenerOptions, options);
     if (!type) {
       throw new Error('Event type not specified');
     }
     if (typeof listener !== 'function') {
       throw new Error('Event listener must be a function');
     }
+    this.removeEventListener(type, listener);
     if (!this.#listeners[type]) {
       this.#listeners[type] = [];
     }
-    if (!this.#listeners[type].find((eventListener: IEventListener) => eventListener.listener === listener)) {
-      this.#listeners[type].push({ listener, options });
-      this.#listeners[type].sort((a: IEventListener, b: IEventListener) => {
-        return ~~a.options.priority - ~~b.options.priority;
-      });
-    }
+    this.#listeners[type].push({ listener, options });
+    this.#listeners[type].sort((a: IEventListener, b: IEventListener) => {
+      return (a.options.priority || 0) - (a.options.priority || 0);
+    });
     return this;
   }
 
@@ -75,6 +80,11 @@ interface IEventListener {
 }
 
 interface IEventListenerOptions {
-  // TODO Implement... eventClass: typeof ConbineEvent,
-  priority: number,
+  priority?: number,
+  once?: boolean,
 }
+
+const defaultEventListenerOptions: IEventListenerOptions = {
+  priority: 0,
+  once: false,
+};
