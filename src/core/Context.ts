@@ -109,8 +109,8 @@ export class Context extends EventDispatcher {
   #executeCommand = (event: ConbineEvent): void => {
     const commands = this.#commands.filter(command => command.eventType === event.type);
     commands.forEach(command => {
-      const cmd = new command.commandClass();
-      cmd.execute(event);
+      const cmd = new command.commandClass(event);
+      cmd.execute();
     });
   };
 }
