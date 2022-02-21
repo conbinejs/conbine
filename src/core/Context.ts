@@ -37,7 +37,7 @@ export class Context extends EventDispatcher {
   /**
    * Map class instance to a property name
    */
-  public mapSingleton(propertyName: string, singletonClass: typeof Function, ...args: any[]) {
+  public mapSingleton(propertyName: string, singletonClass: new (...args: any[]) => any, ...args: any[]) {
     if (!propertyName) throw new Error('propertyName cannot be undefined');
     this.#singletons[propertyName] = typeof singletonClass === 'function'
       ? new singletonClass(...args)

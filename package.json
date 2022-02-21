@@ -1,6 +1,6 @@
 {
   "name": "conbine",
-  "version": "5.0.4",
+  "version": "5.0.6",
   "description": "A subset of ConboJS for use with your favourite view framework",
   "main": "lib/index.js",
   "scripts": {

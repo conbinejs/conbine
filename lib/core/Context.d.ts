@@ -17,7 +17,7 @@ export declare class Context extends EventDispatcher {
     /**
      * Map class instance to a property name
      */
-    mapSingleton(propertyName: string, singletonClass: typeof Function, ...args: any[]): this;
+    mapSingleton(propertyName: string, singletonClass: new (...args: any[]) => any, ...args: any[]): this;
     /**
      * Unmap class instance from a property name
      */
