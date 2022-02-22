@@ -1,10 +1,21 @@
 import ConbineEvent from "./ConbineEvent";
 
 /**
+ * Event dispatcher interface
+ * @author	Neil Rackett
+ */
+export interface IEventDispatcher {
+  dispatchEvent(event: ConbineEvent): this;
+  addEventListener(type: string, listener: Function, options?: IEventListenerOptions): this;
+  removeEventListener(type: string, listener: Function): this;
+  hasEventListener(type: string): boolean;
+}
+
+/**
  * Event dispatcher
  * @author	Neil Rackett
  */
-export class EventDispatcher {
+export class EventDispatcher implements IEventDispatcher {
 
   #listeners: any;
 
