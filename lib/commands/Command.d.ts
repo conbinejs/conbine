@@ -1,3 +1,4 @@
+import Context from "../core/Context";
 import ConbineEvent from "../events/ConbineEvent";
 /**
  * Executes a command in response to an event dispatched from the event bus
@@ -8,6 +9,7 @@ import ConbineEvent from "../events/ConbineEvent";
  */
 export declare class Command {
     event: ConbineEvent;
-    constructor(event: ConbineEvent);
+    context: Context;
+    constructor(event: ConbineEvent, context: Context);
     execute(): Promise<void>;
 }

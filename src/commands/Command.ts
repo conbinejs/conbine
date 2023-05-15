@@ -1,3 +1,4 @@
+import Context from "../core/Context";
 import ConbineEvent from "../events/ConbineEvent";
 
 /**
@@ -9,13 +10,13 @@ import ConbineEvent from "../events/ConbineEvent";
  */
 export class Command {
 
-  public event: ConbineEvent;
-
-  constructor(event: ConbineEvent) {
-    this.event = event;
-  }
+  constructor(
+    public event: ConbineEvent,
+    public context: Context,
+  ) { }
 
   async execute() {
     throw new Error(`${this} must override the execute() method`);
   }
+
 }

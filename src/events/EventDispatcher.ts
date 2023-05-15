@@ -23,7 +23,7 @@ export class EventDispatcher implements IEventDispatcher {
     this.#listeners = {};
   }
 
-  public dispatchEvent(event: ConbineEvent): this {
+  public dispatchEvent = (event: ConbineEvent): this => {
     if (!event || !event.type) {
       throw new Error('Event type not specified');
     }
@@ -41,9 +41,9 @@ export class EventDispatcher implements IEventDispatcher {
       });
     }
     return this;
-  }
+  };
 
-  public addEventListener(type: string, listener: Function, options?: IEventListenerOptions): this {
+  public addEventListener = (type: string, listener: Function, options?: IEventListenerOptions): this => {
     options = Object.assign({}, defaultEventListenerOptions, options);
     if (!type) {
       throw new Error('Event type not specified');
@@ -60,9 +60,9 @@ export class EventDispatcher implements IEventDispatcher {
       return (a.options.priority || 0) - (a.options.priority || 0);
     });
     return this;
-  }
+  };
 
-  public removeEventListener(type: string, listener: Function): this {
+  public removeEventListener = (type: string, listener: Function): this => {
     if (!type) {
       throw new Error('Event type not specified');
     }
@@ -78,11 +78,11 @@ export class EventDispatcher implements IEventDispatcher {
       }
     }
     return this;
-  }
+  };
 
-  public hasEventListener(type: string): boolean {
+  public hasEventListener = (type: string): boolean => {
     return !!this.#listeners[type];
-  }
+  };
 }
 
 interface IEventListener {
