@@ -7,6 +7,7 @@
     "prepublish": "npm run build",
     "build": "tsc",
     "watch": "tsc --watch",
+    "docs": "npx typedoc src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
