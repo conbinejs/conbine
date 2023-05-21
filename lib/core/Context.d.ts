@@ -1,4 +1,5 @@
 import { Command } from "../commands/Command";
+import ConbineEvent from "../events/ConbineEvent";
 import { EventDispatcher } from "../events/EventDispatcher";
 /**
  * Application context (event bus)
@@ -33,10 +34,11 @@ export declare class Context extends EventDispatcher {
     /**
      * Inject constants and singleton instances into specified object
      */
-    inject(obj: any, ...propertyNames: string[]): any;
+    inject(target: any, ...propertyNames: string[]): any;
     /**
      * Set constants and singleton instances on the specified object to undefined
      */
     uninject(obj: any, ...propertyNames: string[]): any;
+    protected executeCommand: (event: ConbineEvent) => void;
 }
 export default Context;

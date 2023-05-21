@@ -1,11 +1,12 @@
 {
   "name": "conbine",
-  "version": "5.0.9",
+  "version": "5.0.11",
   "description": "A subset of ConboJS for use with your favourite view framework",
   "main": "lib/index.js",
   "scripts": {
     "prepublish": "npm run build",
     "build": "tsc",
+    "watch": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

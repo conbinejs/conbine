@@ -1,6 +1,7 @@
 import { Command } from "../commands/Command";
 import ConbineEvent from "../events/ConbineEvent";
 import { EventDispatcher } from "../events/EventDispatcher";
+import { Actor } from "../services/Actor";
 
 /**
  * Application context (event bus)
@@ -16,7 +17,7 @@ export class Context extends EventDispatcher {
    */
   public mapCommand(eventType: string, commandClass: typeof Command): this {
     this.unmapCommand(eventType, commandClass);
-    this.addEventListener(eventType, this.#executeCommand);
+    this.addEventListener(eventType, this.executeCommand);
     this.#commands.push({ eventType, commandClass });
     return this;
   }
@@ -29,7 +30,7 @@ export class Context extends EventDispatcher {
       return !(command.eventType === eventType && command.commandClass === commandClass);
     });
     if (!this.#commands.filter(command => command.eventType === eventType).length) {
-      this.removeEventListener(eventType, this.#executeCommand);
+      this.removeEventListener(eventType, this.executeCommand);
     }
     return this;
   }
@@ -38,11 +39,19 @@ export class Context extends EventDispatcher {
    * Map class instance to a property name
    */
   public mapSingleton(propertyName: string, singletonClass: new (...args: any[]) => any, ...args: any[]) {
+
     if (!propertyName) throw new Error('propertyName cannot be undefined');
+
+    if (Actor.isPrototypeOf(singletonClass)) {
+      args[0] = Object.assign(args[0] ?? {}, { context: this });
+    }
+
     this.#singletons[propertyName] = typeof singletonClass === 'function'
       ? new singletonClass(...args)
       : this.#singletons[propertyName] = singletonClass;
+
     return this;
+
   }
 
   /**
@@ -71,22 +80,21 @@ export class Context extends EventDispatcher {
   /**
    * Inject constants and singleton instances into specified object
    */
-  public inject(obj: any, ...propertyNames: string[]): any {
+  public inject(target: any, ...propertyNames: string[]): any {
     if (!propertyNames.length) {
-      propertyNames = Object.keys(obj);
+      for (const key in target) propertyNames.push(key);
     }
-
-    for (const propertyName in this.#singletons) {
-      if (propertyNames.indexOf(propertyName) !== -1) {
-        const value = this.#singletons[propertyName];
-        Object.defineProperty(obj, propertyName, {
+    for (const key in this.#singletons) {
+      if (propertyNames.includes(key)) {
+        const value = this.#singletons[key];
+        target[key] ?? Object.defineProperty(target, key, {
           configurable: true,
-          get: function () { return value; }
+          get() { return value; }
         });
       }
     }
 
-    return obj;
+    return target;
   }
 
   /**
@@ -106,14 +114,14 @@ export class Context extends EventDispatcher {
     return obj;
   }
 
-  #executeCommand = (event: ConbineEvent): void => {
+  protected executeCommand = (event: ConbineEvent): void => {
     const commands = this.#commands.filter(command => command.eventType === event.type);
     commands.forEach(command => {
-      const cmd = new command.commandClass(event, this);
-      this.inject(cmd);
+      const cmd = new command.commandClass({ event, context: this });
       cmd.execute();
     });
   };
+
 }
 
 export default Context;
