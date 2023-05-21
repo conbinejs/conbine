@@ -1,4 +1,5 @@
 import Context from "../core/Context";
+import { IInjectable } from "../decorators/IInjectable";
 
 interface IActorOptions {
   context: Context;
@@ -10,9 +11,9 @@ interface IActorOptions {
  * @see Context.mapSingleton
  * @author	Neil Rackett
  */
-export class Actor {
+export class Actor implements IInjectable {
 
-  protected context: Context;
+  public context: Context;
 
   constructor(options: IActorOptions) {
     this.context = options.context;

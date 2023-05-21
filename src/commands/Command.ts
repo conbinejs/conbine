@@ -1,4 +1,5 @@
 import Context from "../core/Context";
+import { IInjectable } from "../decorators/IInjectable";
 import ConbineEvent from "../events/ConbineEvent";
 
 interface ICommandOptions {
@@ -13,7 +14,7 @@ interface ICommandOptions {
  * @see Context.mapCommand
  * @author	Neil Rackett
  */
-export class Command {
+export class Command implements IInjectable {
 
   public event: ConbineEvent;
   public context: Context;
@@ -23,7 +24,7 @@ export class Command {
     this.context = options.context;
   }
 
-  public async execute() {
+  public async execute(): Promise<void> {
     throw new Error(`${this} must override the execute() method`);
   }
 

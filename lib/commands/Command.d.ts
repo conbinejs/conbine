@@ -1,4 +1,5 @@
 import Context from "../core/Context";
+import { IInjectable } from "../decorators/IInjectable";
 import ConbineEvent from "../events/ConbineEvent";
 interface ICommandOptions {
     context: Context;
@@ -11,7 +12,7 @@ interface ICommandOptions {
  * @see Context.mapCommand
  * @author	Neil Rackett
  */
-export declare class Command {
+export declare class Command implements IInjectable {
     event: ConbineEvent;
     context: Context;
     constructor(options: ICommandOptions);
