@@ -1,8 +1,10 @@
 import Context from "../core/Context";
-import { IInjectable } from "./IInjectable";
+import { IInjectable } from "../core/IInjectable";
 
 /**
- * Experimental class decorator to enable automatic property injection
+ * Experimental class decorator to enable automatic property injection for
+ * classes that implement the IInjectable interface
+ *
  * @author	Neil Rackett
  */
 export function Injectable<T extends { new(...args: any[]): {}; }>(target: T): any {

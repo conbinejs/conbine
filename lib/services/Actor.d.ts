@@ -1,5 +1,5 @@
 import Context from "../core/Context";
-import { IInjectable } from "../decorators/IInjectable";
+import { IInjectable } from "../core/IInjectable";
 interface IActorOptions {
     context: Context;
 }
