@@ -34,11 +34,11 @@ export declare class Context extends EventDispatcher {
     /**
      * Inject constants and singleton instances into specified object
      */
-    inject(target: any, ...propertyNames: string[]): any;
+    inject(target: any, ...keys: string[]): any;
     /**
-     * Set constants and singleton instances on the specified object to undefined
+     * Delete injected constants and singleton instances on the specified object
      */
-    uninject(obj: any, ...propertyNames: string[]): any;
+    uninject(obj: any, ...keys: string[]): any;
     protected executeCommand: (event: ConbineEvent) => void;
 }
 export default Context;

@@ -80,12 +80,13 @@ export class Context extends EventDispatcher {
   /**
    * Inject constants and singleton instances into specified object
    */
-  public inject(target: any, ...propertyNames: string[]): any {
-    if (!propertyNames.length) {
-      propertyNames = Object.keys(target);
+  public inject(target: any, ...keys: string[]): any {
+    if (!keys.length) {
+      keys = Object.keys(target);
     }
+
     for (const key in this.#singletons) {
-      if (propertyNames.includes(key)) {
+      if (keys.includes(key)) {
         const value = this.#singletons[key];
         target[key] ?? Object.defineProperty(target, key, {
           configurable: true,
@@ -98,16 +99,16 @@ export class Context extends EventDispatcher {
   }
 
   /**
-   * Set constants and singleton instances on the specified object to undefined
+   * Delete injected constants and singleton instances on the specified object
    */
-  public uninject(obj: any, ...propertyNames: string[]): any {
-    if (!propertyNames.length) {
-      propertyNames = Object.keys(obj);
+  public uninject(obj: any, ...keys: string[]): any {
+    if (!keys.length) {
+      keys = Object.keys(obj);
     }
 
-    for (const propertyName in this.#singletons) {
-      if (propertyNames.indexOf(propertyName) !== -1) {
-        delete obj[propertyName];
+    for (const key in this.#singletons) {
+      if (keys.includes(key)) {
+        delete obj[key];
       }
     }
 
