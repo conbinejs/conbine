@@ -82,7 +82,7 @@ export class Context extends EventDispatcher {
    */
   public inject(target: any, ...propertyNames: string[]): any {
     if (!propertyNames.length) {
-      for (const key in target) propertyNames.push(key);
+      propertyNames = Object.keys(target);
     }
     for (const key in this.#singletons) {
       if (propertyNames.includes(key)) {
