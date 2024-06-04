@@ -67,7 +67,9 @@ export class Context extends EventDispatcher {
    * Map constant value to a property name
    */
   public mapConstant(propertyName: string, value: any): this {
-    return this.mapSingleton(propertyName, value);
+    if (!propertyName) throw new Error('propertyName cannot be undefined');
+    this.#singletons[propertyName] = value;
+    return this;
   }
 
   /**

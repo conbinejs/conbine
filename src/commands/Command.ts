@@ -2,11 +2,6 @@ import Context from "../core/Context";
 import { IInjectable } from "../core/IInjectable";
 import ConbineEvent from "../events/ConbineEvent";
 
-interface ICommandOptions {
-  context: Context;
-  event: ConbineEvent;
-}
-
 /**
  * Executes a command in response to an event dispatched from the event bus
  * The naming convention for a command class is EventItsMappedToCommand
@@ -14,12 +9,15 @@ interface ICommandOptions {
  * @see Context.mapCommand
  * @author	Neil Rackett
  */
-export class Command implements IInjectable {
+export class Command<TEvent extends ConbineEvent = ConbineEvent> implements IInjectable {
 
-  public event: ConbineEvent;
+  public event: TEvent;
   public context: Context;
 
-  constructor(options: ICommandOptions) {
+  constructor(options: {
+    context: Context;
+    event: TEvent;
+  }) {
     this.event = options.event;
     this.context = options.context;
   }

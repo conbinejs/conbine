@@ -17,7 +17,7 @@ export declare class EventDispatcher implements IEventDispatcher {
     #private;
     constructor();
     dispatchEvent: (event: ConbineEvent) => this;
-    addEventListener: (type: string, listener: Function, options?: IEventListenerOptions | undefined) => this;
+    addEventListener: (type: string, listener: Function, options?: IEventListenerOptions) => this;
     removeEventListener: (type: string, listener: Function) => this;
     hasEventListener: (type: string) => boolean;
 }

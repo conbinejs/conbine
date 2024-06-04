@@ -1,6 +1,6 @@
 {
   "name": "conbine",
-  "version": "5.0.12",
+  "version": "5.0.13",
   "description": "A subset of ConboJS for use with your favourite view framework",
   "main": "lib/index.js",
   "scripts": {
@@ -30,11 +30,11 @@
   "author": "Neil Rackett",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/conbojs/conbine/issues"
+    "url": "https://github.com/conbinejs/conbine/issues"
   },
-  "homepage": "https://github.com/conbojs/conbine#readme",
+  "homepage": "https://github.com/conbinejs/conbine#readme",
   "devDependencies": {
-    "typescript": "^4.2.3"
+    "typescript": "^5.2.2"
   },
   "files": [
     "lib/"
