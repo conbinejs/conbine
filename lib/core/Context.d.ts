@@ -10,11 +10,11 @@ export declare class Context extends EventDispatcher {
     /**
      * Map specified Command class the given event
      */
-    mapCommand(eventType: string, commandClass: typeof Command): this;
+    mapCommand(eventType: string, commandClass: typeof Command<ConbineEvent>): this;
     /**
      * Unmap specified Command class from given event
      */
-    unmapCommand(eventType: string, commandClass: typeof Command): this;
+    unmapCommand(eventType: string, commandClass: typeof Command<ConbineEvent>): this;
     /**
      * Map class instance to a property name
      */

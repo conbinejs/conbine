@@ -15,7 +15,7 @@ export class Context extends EventDispatcher {
   /**
    * Map specified Command class the given event
    */
-  public mapCommand(eventType: string, commandClass: typeof Command): this {
+  public mapCommand(eventType: string, commandClass: typeof Command<ConbineEvent>): this {
     this.unmapCommand(eventType, commandClass);
     this.addEventListener(eventType, this.executeCommand);
     this.#commands.push({ eventType, commandClass });
@@ -25,7 +25,7 @@ export class Context extends EventDispatcher {
   /**
    * Unmap specified Command class from given event
    */
-  public unmapCommand(eventType: string, commandClass: typeof Command): this {
+  public unmapCommand(eventType: string, commandClass: typeof Command<ConbineEvent>): this {
     this.#commands = this.#commands.filter(command => {
       return !(command.eventType === eventType && command.commandClass === commandClass);
     });
