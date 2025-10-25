@@ -8,6 +8,7 @@ export interface IEventDispatcher {
   dispatchEvent(event: ConbineEvent): this;
   addEventListener(type: string, listener: Function, options?: IEventListenerOptions): this;
   removeEventListener(type: string, listener: Function): this;
+  removeAllEventListeners(type?: string, options?: IEventListenerOptions): this;
   hasEventListener(type: string): boolean;
 }
 
@@ -17,11 +18,7 @@ export interface IEventDispatcher {
  */
 export class EventDispatcher implements IEventDispatcher {
 
-  #listeners: any;
-
-  constructor() {
-    this.#listeners = {};
-  }
+  #listeners: Record<string, IEventListener[]> = {};
 
   public dispatchEvent = (event: ConbineEvent): this => {
     if (!event || !event.type) {
@@ -80,6 +77,26 @@ export class EventDispatcher implements IEventDispatcher {
     return this;
   };
 
+  /**
+   * Removes all event listeners, optionally limited to listeners of a specific type and/or group
+   */
+  public removeAllEventListeners = (type?: string, options?: IEventListenerOptions): this => {
+    if (type || options?.group) {
+      const keys = type ? [type] : Object.keys(this.#listeners);
+      for (const key of keys) {
+        this.#listeners[key] = this.#listeners[key].filter((eventListener: IEventListener) => {
+          return !options?.group || options.group !== eventListener.options.group;
+        });
+        if (!this.#listeners[key].length) {
+          delete this.#listeners[key];
+        }
+      }
+    } else {
+      this.#listeners = {};
+    }
+    return this;
+  };
+
   public hasEventListener = (type: string): boolean => {
     return !!this.#listeners[type];
   };
@@ -93,6 +110,7 @@ interface IEventListener {
 interface IEventListenerOptions {
   priority?: number,
   once?: boolean,
+  group?: any,
 }
 
 const defaultEventListenerOptions: IEventListenerOptions = {
