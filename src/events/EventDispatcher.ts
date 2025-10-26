@@ -87,7 +87,7 @@ export class EventDispatcher<E extends ConbineEvent = ConbineEvent> implements I
       const keys = type ? [type] : Object.keys(this.#listeners);
       for (const key of keys) {
         this.#listeners[key] = this.#listeners[key].filter((eventListener: IEventListener<E>) => {
-          return !options?.group || options.group !== eventListener.options.group;
+          return !!options?.group && options.group !== eventListener.options.group;
         });
         if (!this.#listeners[key].length) {
           delete this.#listeners[key];
@@ -99,7 +99,15 @@ export class EventDispatcher<E extends ConbineEvent = ConbineEvent> implements I
     return this;
   };
 
-  public hasEventListener = (type: string): boolean => {
+  public hasEventListener = (type: string, options?: IEventListenerOptions): boolean => {
+    if (!type) {
+      throw new Error('Event type not specified');
+    }
+    if (options?.group) {
+      return !!this.#listeners[type]?.find((eventListener: IEventListener<E>) => {
+        return eventListener.options.group === options.group;
+      });
+    }
     return !!this.#listeners[type];
   };
 }

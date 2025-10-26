@@ -8,7 +8,7 @@
     "build": "tsc",
     "watch": "tsc --watch",
     "docs": "npx typedoc src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "repository": {
     "type": "git",
@@ -34,7 +34,8 @@
   },
   "homepage": "https://github.com/conbinejs/conbine#readme",
   "devDependencies": {
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "vitest": "^4.0.3"
   },
   "files": [
     "lib/"
