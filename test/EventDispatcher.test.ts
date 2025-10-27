@@ -17,7 +17,7 @@ describe('EventDispatcher', () => {
     dispatcher = new EventDispatcher<TestEvent>();
   });
 
-  it('Should add and dispatch event listeners', () => {
+  it('should add and dispatch event listeners', () => {
     const mockListener = vi.fn();
     dispatcher.addEventListener('test', mockListener);
     const event = new TestEvent('test', 'foo');
@@ -25,7 +25,7 @@ describe('EventDispatcher', () => {
     expect(mockListener).toHaveBeenCalledWith(event);
   });
 
-  it('Should remove event listeners', () => {
+  it('should remove event listeners', () => {
     const mockListener = vi.fn();
     dispatcher.addEventListener('test', mockListener);
     dispatcher.removeEventListener('test', mockListener);
@@ -33,7 +33,7 @@ describe('EventDispatcher', () => {
     expect(mockListener).not.toHaveBeenCalled();
   });
 
-  it('Should support once option', () => {
+  it('should support once option', () => {
     const mockListener = vi.fn();
     dispatcher.addEventListener('test', mockListener, { once: true });
     dispatcher.dispatchEvent(new TestEvent('test', 'foo'));
@@ -41,7 +41,7 @@ describe('EventDispatcher', () => {
     expect(mockListener).toHaveBeenCalledTimes(1);
   });
 
-  it('Should remove all event listeners', () => {
+  it('should remove all event listeners', () => {
     const mockListener = vi.fn();
     dispatcher.addEventListener('test1', mockListener);
     dispatcher.addEventListener('test2', mockListener);
@@ -50,7 +50,7 @@ describe('EventDispatcher', () => {
     expect(dispatcher.hasEventListener('test2')).toBe(false);
   });
 
-  it('Should remove all event listeners of specified type', () => {
+  it('should remove all event listeners of specified type', () => {
     const mockListener1 = vi.fn();
     const mockListener2 = vi.fn();
     dispatcher.addEventListener('test', mockListener1);
@@ -61,7 +61,7 @@ describe('EventDispatcher', () => {
     expect(mockListener2).not.toHaveBeenCalled();
   });
 
-  it('Should remove all event listeners in specified group', () => {
+  it('should remove all event listeners in specified group', () => {
     const mockListener1 = vi.fn();
     const mockListener2 = vi.fn();
     dispatcher.addEventListener('test', mockListener1, { group: 'group1' });
@@ -72,7 +72,7 @@ describe('EventDispatcher', () => {
     expect(mockListener2).not.toHaveBeenCalled();
   });
 
-  it('Should check for event listeners', () => {
+  it('should check for event listeners', () => {
     const mockListener = vi.fn();
     expect(dispatcher.hasEventListener('test')).toBe(false);
     dispatcher.addEventListener('test', mockListener);
