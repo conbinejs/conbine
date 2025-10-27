@@ -36,6 +36,13 @@ export class Context extends EventDispatcher {
   }
 
   /**
+   * Check if a command mapping exists for the given event and command class
+   */
+  public hasCommand(eventType: string, commandClass?: typeof Command<ConbineEvent>): boolean {
+    return this.#commands.some(command => command.eventType === eventType && (!commandClass || command.commandClass === commandClass));
+  }
+
+  /**
    * Map class instance to a property name
    */
   public mapSingleton(propertyName: string, singletonClass: new (...args: any[]) => any, ...args: any[]) {
@@ -64,6 +71,13 @@ export class Context extends EventDispatcher {
   }
 
   /**
+   * Check if a singleton exists for the given property name
+   */
+  public hasSingleton(propertyName: string): boolean {
+    return propertyName in this.#singletons && typeof this.#singletons[propertyName] === "object";
+  }
+
+  /**
    * Map constant value to a property name
    */
   public mapConstant(propertyName: string, value: any): this {
@@ -77,6 +91,13 @@ export class Context extends EventDispatcher {
    */
   public unmapConstant(propertyName: string): this {
     return this.unmapSingleton(propertyName);
+  }
+
+  /**
+   * Check if a constant exists for the given property name
+   */
+  public hasConstant(propertyName: string): boolean {
+    return propertyName in this.#singletons;
   }
 
   /**
