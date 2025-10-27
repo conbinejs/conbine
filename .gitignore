@@ -1,5 +1,6 @@
 *.log
 package-lock.json
-node_modules/
+node_modules
 tsconfig.tsbuildinfo
 /docs
+/lib
