@@ -1,3 +1,5 @@
+![ConboJS](https://raw.githubusercontent.com/mesmotronic/conbo/master/img/conbo.png)
+
 # Conbine
 
 Conbine is a subset of ConboJS for use in combination with your favourite view framework, including React, or server-side applications using Node.js.
