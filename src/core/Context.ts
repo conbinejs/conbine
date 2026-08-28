@@ -1,7 +1,7 @@
-import { Command } from "../commands/Command";
-import ConbineEvent from "../events/ConbineEvent";
-import { EventDispatcher } from "../events/EventDispatcher";
-import { Actor } from "../services/Actor";
+import { Command } from "../commands/Command.js";
+import ConbineEvent from "../events/ConbineEvent.js";
+import { EventDispatcher } from "../events/EventDispatcher.js";
+import { Actor } from "../services/Actor.js";
 
 /**
  * Application context (event bus)

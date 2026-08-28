@@ -1,12 +1,12 @@
-import Context from "./core/Context";
+import Context from "./core/Context.js";
 
-export * from './commands/Command';
-export * from './core/Context';
-export * from './core/IInjectable';
-export * from './decorators/Injectable';
-export * from './events/ConbineEvent';
-export * from './events/EventDispatcher';
-export * from './services/Actor';
+export * from './commands/Command.js';
+export * from './core/Context.js';
+export * from './core/IInjectable.js';
+export * from './decorators/Injectable.js';
+export * from './events/ConbineEvent.js';
+export * from './events/EventDispatcher.js';
+export * from './services/Actor.js';
 
 /**
  * Ready-made Context instance for anyone who just wants a ready-to-go event

@@ -1,6 +1,6 @@
-import Context from "../core/Context";
-import { IInjectable } from "../core/IInjectable";
-import ConbineEvent from "../events/ConbineEvent";
+import Context from "../core/Context.js";
+import { IInjectable } from "../core/IInjectable.js";
+import ConbineEvent from "../events/ConbineEvent.js";
 
 /**
  * Executes a command in response to an event dispatched from the event bus

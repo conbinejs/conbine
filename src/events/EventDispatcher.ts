@@ -1,5 +1,5 @@
 
-import ConbineEvent from "./ConbineEvent";
+import ConbineEvent from "./ConbineEvent.js";
 
 type TEventListener<E extends ConbineEvent = ConbineEvent> = (event: E) => any;
 
@@ -8,9 +8,9 @@ type TEventListener<E extends ConbineEvent = ConbineEvent> = (event: E) => any;
  * @author	Neil Rackett
  */
 export interface IEventDispatcher<E extends ConbineEvent = ConbineEvent> {
-  dispatchEvent(event: E): this;
-  addEventListener(type: string, listener: TEventListener<E>, options?: IEventListenerOptions): this;
-  removeEventListener(type: string, listener: TEventListener<E>): this;
+  dispatchEvent(event: ConbineEvent): this;
+  addEventListener<T extends ConbineEvent = E>(type: string, listener: TEventListener<T>, options?: IEventListenerOptions): this;
+  removeEventListener<T extends ConbineEvent = E>(type: string, listener: TEventListener<T>): this;
   removeAllEventListeners(type?: string, options?: IEventListenerOptions): this;
   hasEventListener(type: string): boolean;
 }
@@ -20,9 +20,9 @@ export interface IEventDispatcher<E extends ConbineEvent = ConbineEvent> {
  * @author	Neil Rackett
  */
 export class EventDispatcher<E extends ConbineEvent = ConbineEvent> implements IEventDispatcher<E> {
-  #listeners: Record<string, IEventListener<E>[]> = {};
+  #listeners: Record<string, IEventListener[]> = {};
 
-  public dispatchEvent = (event: E): this => {
+  public dispatchEvent = (event: ConbineEvent): this => {
     if (!event || !event.type) {
       throw new Error('Event type not specified');
     }
@@ -31,7 +31,7 @@ export class EventDispatcher<E extends ConbineEvent = ConbineEvent> implements I
     }
     const { type } = event;
     if (this.#listeners[type]) {
-      this.#listeners[type].forEach((eventListener: IEventListener<E>) => {
+      this.#listeners[type].forEach((eventListener: IEventListener) => {
         const { listener, options } = eventListener;
         listener(event);
         if (options.once) {
@@ -42,7 +42,7 @@ export class EventDispatcher<E extends ConbineEvent = ConbineEvent> implements I
     return this;
   };
 
-  public addEventListener = (type: string, listener: TEventListener<E>, options?: IEventListenerOptions): this => {
+  public addEventListener = <T extends ConbineEvent = E>(type: string, listener: TEventListener<T>, options?: IEventListenerOptions): this => {
     options = Object.assign({}, defaultEventListenerOptions, options);
     if (!type) {
       throw new Error('Event type not specified');
@@ -55,13 +55,13 @@ export class EventDispatcher<E extends ConbineEvent = ConbineEvent> implements I
       this.#listeners[type] = [];
     }
     this.#listeners[type].push({ listener, options });
-    this.#listeners[type].sort((a: IEventListener<E>, b: IEventListener<E>) => {
-      return (a.options.priority || 0) - (a.options.priority || 0);
+    this.#listeners[type].sort((a: IEventListener, b: IEventListener) => {
+      return (a.options.priority || 0) - (b.options.priority || 0);
     });
     return this;
   };
 
-  public removeEventListener = (type: string, listener: TEventListener<E>): this => {
+  public removeEventListener = <T extends ConbineEvent = E>(type: string, listener: TEventListener<T>): this => {
     if (!type) {
       throw new Error('Event type not specified');
     }
@@ -69,7 +69,7 @@ export class EventDispatcher<E extends ConbineEvent = ConbineEvent> implements I
       throw new Error('Event listener must be a function');
     }
     if (this.#listeners[type]) {
-      this.#listeners[type] = this.#listeners[type].filter((eventListener: IEventListener<E>) => {
+      this.#listeners[type] = this.#listeners[type].filter((eventListener: IEventListener) => {
         return eventListener.listener !== listener;
       });
       if (!this.#listeners[type].length) {
@@ -86,7 +86,7 @@ export class EventDispatcher<E extends ConbineEvent = ConbineEvent> implements I
     if (type || options?.group) {
       const keys = type ? [type] : Object.keys(this.#listeners);
       for (const key of keys) {
-        this.#listeners[key] = this.#listeners[key].filter((eventListener: IEventListener<E>) => {
+        this.#listeners[key] = this.#listeners[key].filter((eventListener: IEventListener) => {
           return !!options?.group && options.group !== eventListener.options.group;
         });
         if (!this.#listeners[key].length) {
@@ -104,7 +104,7 @@ export class EventDispatcher<E extends ConbineEvent = ConbineEvent> implements I
       throw new Error('Event type not specified');
     }
     if (options?.group) {
-      return !!this.#listeners[type]?.find((eventListener: IEventListener<E>) => {
+      return !!this.#listeners[type]?.find((eventListener: IEventListener) => {
         return eventListener.options.group === options.group;
       });
     }
@@ -113,8 +113,8 @@ export class EventDispatcher<E extends ConbineEvent = ConbineEvent> implements I
 }
 
 
-interface IEventListener<E extends ConbineEvent = ConbineEvent> {
-  listener: TEventListener<E>,
+interface IEventListener {
+  listener: TEventListener<any>,
   options: IEventListenerOptions,
 }
 

@@ -1,5 +1,5 @@
-import Context from "../core/Context";
-import { IInjectable } from "../core/IInjectable";
+import Context from "../core/Context.js";
+import { IInjectable } from "../core/IInjectable.js";
 
 /**
  * Experimental class decorator to enable automatic property injection for
